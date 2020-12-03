@@ -4,7 +4,7 @@ class PrototypesController < ApplicationController
   before_action :move_to_top_page, only: :edit
 
   def index
-    @prototypes = Prototype.all
+    @prototypes = Prototype.includes(:user)
   end
 
 
@@ -14,8 +14,8 @@ class PrototypesController < ApplicationController
 
 
   def create
-    prototype = Prototype.new(prototype_params)
-    if prototype.save
+    @prototype = Prototype.new(prototype_params)
+    if @prototype.save
       redirect_to root_path
     else
       render :new
